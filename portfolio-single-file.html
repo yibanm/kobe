@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的作品集</title>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a6fa5;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4a6fa5;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* 首页横幅样式 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #4a6fa5 0%, #6b5b95 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #88b795;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #6b9c7d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 关于我部分样式 */
+        .about {
+            padding: 100px 0;
+            background-color: #f8f9fa;
+        }
+
+        .about h2, .projects h2, .contact h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        .about-text {
+            flex: 2;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .skills {
+            flex: 1;
+        }
+
+        .skills h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .skills ul {
+            list-style: none;
+        }
+
+        .skills ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .skills ul li:before {
+            content: "✓";
+            color: #88b795;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* 项目部分样式 */
+        .projects {
+            padding: 100px 0;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-img {
+            height: 200px;
+            background-color: #ddd;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .project-info p {
+            color: #666;
+        }
+
+        /* 联系部分样式 */
+        .contact {
+            padding: 100px 0;
+            background-color: #f8f9fa;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info ul {
+            list-style: none;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #88b795;
+        }
+
+        /* 响应式设计 */
+        @media screen and (max-width: 768px) {
+            .burger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                right: 0px;
+                height: 90vh;
+                top: 70px;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links li {
+                margin: 30px 0;
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content,
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .social-links {
+                margin-top: 20px;
+            }
+            
+            .social-links a {
+                margin: 0 10px;
+            }
+        }
+
+        /* 汉堡菜单动画 */
+        .toggle .line1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .toggle .line2 {
+            opacity: 0;
+        }
+
+        .toggle .line3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">我的作品集</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>你好，我是[您的名字]</h1>
+            <p>一位热爱技术和设计的开发者</p>
+            <a href="#projects" class="btn">查看我的作品</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>我是一名充满热情的开发者，专注于创建美观且功能强大的网页应用。我拥有[X年]的开发经验，擅长前端技术如HTML、CSS、JavaScript以及现代框架。</p>
+                    <p>我热衷于学习新技术，并且乐于接受挑战。我相信好的设计不仅要美观，更要为用户提供出色的体验。</p>
+                </div>
+                <div class="skills">
+                    <h3>技能</h3>
+                    <ul>
+                        <li>HTML/CSS</li>
+                        <li>JavaScript</li>
+                        <li>React</li>
+                        <li>Vue.js</li>
+                        <li>Node.js</li>
+                        <li>UI/UX设计</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>我的项目</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <div class="project-info">
+                        <h3>项目一</h3>
+                        <p>这是一个使用React构建的响应式电商网站，具有购物车和支付功能。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <div class="project-info">
+                        <h3>项目二</h3>
+                        <p>这是一个任务管理应用，使用Vue.js和Firebase构建，支持实时同步。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <div class="project-info">
+                        <h3>项目三</h3>
+                        <p>这是一个天气应用，使用API获取实时天气数据，并提供美观的可视化界面。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>联系我</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>如果您对我的工作感兴趣或有任何问题，请随时联系我。</p>
+                    <ul>
+                        <li>📧 example@email.com</li>
+                        <li>📱 123-456-7890</li>
+                        <li>📍 城市, 国家</li>
+                    </ul>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="您的姓名" required>
+                    <input type="email" placeholder="您的邮箱" required>
+                    <textarea placeholder="您的消息" required></textarea>
+                    <button type="submit" class="btn">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 我的作品集. 保留所有权利.</p>
+            <div class="social-links">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端导航菜单切换
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            // 切换导航菜单
+            nav.classList.toggle('nav-active');
+            
+            // 添加链接动画
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+            
+            // 汉堡菜单动画
+            burger.classList.toggle('toggle');
+        });
+
+        // 点击导航链接时关闭移动端菜单
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('nav-active');
+                burger.classList.remove('toggle');
+                
+                navLinks.forEach(link => {
+                    link.style.animation = '';
+                });
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 表单提交处理
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 获取表单数据
+                const name = this.querySelector('input[type="text"]').value;
+                const email = this.querySelector('input[type="email"]').value;
+                const message = this.querySelector('textarea').value;
+                
+                // 简单验证
+                if (name && email && message) {
+                    // 在实际应用中，这里会发送数据到服务器
+                    alert('感谢您的消息！我会尽快回复您。');
+                    this.reset();
+                } else {
+                    alert('请填写所有必填字段。');
+                }
+            });
+        }
+
+        // 添加滚动动画
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 添加视差效果到英雄区域
+        document.addEventListener('mousemove', (e) => {
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                const x = (window.innerWidth - e.pageX) / 50;
+                const y = (window.innerHeight - e.pageY) / 50;
+                hero.style.backgroundPosition = `${x}px ${y}px`;
+            }
+        });
+    </script>
+</body>
+</html>
